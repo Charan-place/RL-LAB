@@ -42,7 +42,7 @@
             const rollNumber = document.getElementById('rollNumber').value;
             let fileName;
             let filePath;
-        
+
             // Logic to handle which file to download
             if (fileType === 'Experiment-1.ipynb') {
                 fileName = `${rollNumber}-Lab1.ipynb`; // File 1 with roll number
@@ -51,11 +51,11 @@
                 fileName = `${rollNumber}-Lab2.zip`; // File 2 with roll number
                 filePath = 'labs/expt2_files.zip'; // Relative path from the server root
             }
-        
-            // Create a download link
+
+            // Create a download link with a dynamic file name
             const link = document.createElement('a');
             link.href = `/${filePath}`; // This is relative to your server's root directory
-            link.download = fileName; // Set download name with roll number
+            link.download = fileName; // Set custom download name with roll number
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
