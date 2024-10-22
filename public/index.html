@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Download with Roll Number</title>
+</head>
+<body>
+    <h1>Download Lab File</h1>
+
+    <!-- Input form to ask for Roll Number -->
+    <form id="rollForm">
+        <label for="rollNumber">Enter your Roll Number:</label>
+        <input type="text" id="rollNumber" name="rollNumber" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- File download buttons -->
+    <div id="fileDownloadSection" style="display:none;">
+        <h2>Download Files</h2>
+        <button id="file1" onclick="downloadFile('Experiment-1.ipynb')">Download File 1 (.ipynb)</button>
+        <button id="file2" onclick="downloadFile('expt2_files.zip')">Download File 2 (.zip)</button>
+    </div>
+
+    <script>
+        // Hide the file download section initially
+        document.getElementById('fileDownloadSection').style.display = 'none';
+
+        // Handle form submission
+        document.getElementById('rollForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from refreshing page
+            const rollNumber = document.getElementById('rollNumber').value;
+            
+            // Show file download section after entering roll number
+            if (rollNumber) {
+                document.getElementById('fileDownloadSection').style.display = 'block';
+            }
+        });
+
+        // Function to handle file download with the roll number
+        function downloadFile(fileType) {
+            const rollNumber = document.getElementById('rollNumber').value;
+            let fileName;
+            let filePath;
+        
+            // Logic to handle which file to download
+            if (fileType === 'Experiment-1.ipynb') {
+                fileName = `${rollNumber}-Lab1.ipynb`; // File 1 with roll number
+                filePath = 'labs/Experiment-1.ipynb'; // Relative path from the server root
+            } else if (fileType === 'expt2_files.zip') {
+                fileName = `${rollNumber}-Lab2.zip`; // File 2 with roll number
+                filePath = 'labs/expt2_files.zip'; // Relative path from the server root
+            }
+        
+            // Create a download link
+            const link = document.createElement('a');
+            link.href = `/${filePath}`; // This is relative to your server's root directory
+            link.download = fileName; // Set download name with roll number
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
